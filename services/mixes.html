@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DJ Mixes — Listen & Download | Derrick Files</title>
+  <style>
+    :root { --gold: #F5A623; --black: #050505; --dark: #0C0C0C; --card: #111; --text: #F0F0F0; --muted: #555; --muted2: #888; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--black); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 16px; }
+    .hero { padding: 100px 16px 60px; text-align: center; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(245, 166, 35, 0.08), transparent 70%); }
+    .hero-title { font-weight: 700; font-size: clamp(2rem, 6vw, 3.5rem); margin-bottom: 16px; }
+    .hero-title span { color: var(--gold); }
+    .btn { display: inline-block; background: var(--gold); color: var(--black); padding: 12px 24px; text-decoration: none; font-weight: 700; font-size: 0.65rem; text-transform: uppercase; border-radius: 4px; }
+    .mix-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin: 40px 0; }
+    .mix-card { background: var(--card); border: 1px solid #1E1E1E; padding: 20px; cursor: pointer; transition: all 0.3s; }
+    .mix-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+    .mix-cover { height: 200px; background: linear-gradient(135deg, rgba(245,166,35,0.1), var(--dark)); margin-bottom: 16px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+    .mix-title { font-weight: 700; font-size: 1.3rem; margin-bottom: 8px; }
+    .mix-meta { font-size: 0.8rem; color: var(--muted2); margin-bottom: 12px; }
+    .mix-desc { font-size: 0.85rem; color: var(--muted2); line-height: 1.6; margin-bottom: 16px; }
+    .mix-buttons { display: flex; gap: 8px; }
+    .mix-button { flex: 1; padding: 10px; text-align: center; font-size: 0.65rem; text-decoration: none; color: var(--text); border: 1px solid #1E1E1E; background: none; cursor: pointer; }
+    .mix-button.play { background: var(--gold); color: var(--black); border-color: var(--gold); }
+    @media(min-width: 768px) { .mix-grid { grid-template-columns: repeat(3, 1fr); } }
+  </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3712510054149886" crossorigin="anonymous"></script>
+</head>
+<body style="background: var(--black);">
+
+<header style="position: fixed; top: 0; left: 0; right: 0; z-index: 600; height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background: rgba(5, 5, 5, 0.96); border-bottom: 1px solid #1E1E1E;">
+  <a href="/" style="text-decoration: none; color: var(--gold); font-weight: 700;">DERRICK FILES</a>
+  <a href="/amp/audio-player.html" style="background: var(--gold); color: var(--black); padding: 8px 14px; text-decoration: none; font-weight: 700; font-size: 0.5rem; text-transform: uppercase;">Stream Now</a>
+</header>
+
+<div style="height: 60px;"></div>
+
+<div class="hero">
+  <div class="container">
+    <h1 class="hero-title">LISTEN TO <span>MIXES</span></h1>
+    <p style="font-size: 1rem; color: var(--muted2); max-width: 700px; margin: 0 auto 30px; line-height: 1.7;">
+      Curated DJ mixes across all genres. Stream directly from Cloudflare R2 or download for offline listening.
+    </p>
+    <a href="/amp/audio-player.html" class="btn">Stream All Mixes</a>
+  </div>
+</div>
+
+<div class="container" style="padding: 56px 16px;">
+  <h2 class="hero-title" style="margin-bottom: 40px;">Featured <span>Mixes</span></h2>
+  
+  <div class="mix-grid">
+    <div class="mix-card">
+      <div class="mix-cover">🎵</div>
+      <h3 class="mix-title">Deep House Vibes</h3>
+      <div class="mix-meta">60 min • 120 BPM • Deep House</div>
+      <p class="mix-desc">Smooth deep house selection with organic sounds and soulful basslines. Perfect for late-night sessions.</p>
+      <div class="mix-buttons">
+        <a href="/amp/audio-player.html" class="mix-button play">▶ Play</a>
+        <a href="https://wa.me/256789191660?text=I want to download: Deep House Vibes" class="mix-button">⬇ Download</a>
+      </div>
+    </div>
+
+    <div class="mix-card">
+      <div class="mix-cover">🎵</div>
+      <h3 class="mix-title">Tech House Energy</h3>
+      <div class="mix-meta">48 min • 130 BPM • Tech House</div>
+      <p class="mix-desc">High-energy tech house with driving beats and hypnotic grooves. Club-ready mix.</p>
+      <div class="mix-buttons">
+        <a href="/amp/audio-player.html" class="mix-button play">▶ Play</a>
+        <a href="https://wa.me/256789191660?text=I want to download: Tech House Energy" class="mix-button">⬇ Download</a>
+      </div>
+    </div>
+
+    <div class="mix-card">
+      <div class="mix-cover">🎵</div>
+      <h3 class="mix-title">Techno Minimalism</h3>
+      <div class="mix-meta">72 min • 125 BPM • Techno</div>
+      <p class="mix-desc">Hypnotic minimal techno with industrial textures. For the dedicated dancefloor.</p>
+      <div class="mix-buttons">
+        <a href="/amp/audio-player.html" class="mix-button play">▶ Play</a>
+        <a href="https://wa.me/256789191660?text=I want to download: Techno Minimalism" class="mix-button">⬇ Download</a>
+      </div>
+    </div>
+
+    <div class="mix-card">
+      <div class="mix-cover">🎵</div>
+      <h3 class="mix-title">Summer Vibes Session</h3>
+      <div class="mix-meta">55 min • 115 BPM • Tropical House</div>
+      <p class="mix-desc">Feel-good summer vibes with tropical sounds and uplifting melodies. Daytime party ready.</p>
+      <div class="mix-buttons">
+        <a href="/amp/audio-player.html" class="mix-button play">▶ Play</a>
+        <a href="https://wa.me/256789191660?text=I want to download: Summer Vibes Session" class="mix-button">⬇ Download</a>
+      </div>
+    </div>
+
+    <div class="mix-card">
+      <div class="mix-cover">🎵</div>
+      <h3 class="mix-title">Club Bangers Mix</h3>
+      <div class="mix-meta">65 min • 128 BPM • House/Electro</div>
+      <p class="mix-desc">Peak-time bangers with massive drops and crowd-pleasing vocals. Weekend essential.</p>
+      <div class="mix-buttons">
+        <a href="/amp/audio-player.html" class="mix-button play">▶ Play</a>
+        <a href="https://wa.me/256789191660?text=I want to download: Club Bangers Mix" class="mix-button">⬇ Download</a>
+      </div>
+    </div>
+
+    <div class="mix-card">
+      <div class="mix-cover">🎵</div>
+      <h3 class="mix-title">Studio Production Beats</h3>
+      <div class="mix-meta">90 min • Variable • Production</div>
+      <p class="mix-desc">Inspiring production beats and samples. Perfect for studio sessions and creative work.</p>
+      <div class="mix-buttons">
+        <a href="/amp/audio-player.html" class="mix-button play">▶ Play</a>
+        <a href="https://wa.me/256789191660?text=I want to download: Studio Production Beats" class="mix-button">⬇ Download</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 60px; padding: 40px; background: var(--dark); border-radius: 8px;">
+    <h2 class="hero-title" style="margin-bottom: 20px;">All Mixes <span>Available</span></h2>
+    <p style="font-size: 0.95rem; color: var(--muted2); margin-bottom: 24px;">Stream unlimited mixes on our audio player. High-quality streaming from Cloudflare R2.</p>
+    <a href="/amp/audio-player.html" class="btn" style="padding: 14px 32px; font-size: 0.7rem;">Listen Now</a>
+  </div>
+</div>
+
+</body>
+</html>
