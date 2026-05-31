@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJ Pool | Derrick Files Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dfred: '#E50914', // Sleek red accent
+                        dfdark: '#121212',
+                        dfpanel: '#1E1E1E'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-dfdark text-white font-sans antialiased pb-24">
+
+    <!-- Navigation -->
+    <nav class="bg-black border-b border-gray-800 p-4 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="text-2xl font-black tracking-tighter uppercase">
+                Derrick<span class="text-dfred">Files</span> Studio
+            </div>
+            <div class="hidden md:flex space-x-6 font-semibold text-sm">
+                <a href="/" class="hover:text-dfred transition">Home</a>
+                <a href="/dj-pool.html" class="text-dfred border-b-2 border-dfred pb-1">DJ Pool</a>
+                <a href="#" class="hover:text-dfred transition">Services</a>
+                <a href="#" class="hover:text-dfred transition">Contact</a>
+            </div>
+            <div>
+                <button class="bg-dfred hover:bg-red-700 text-white px-4 py-2 rounded font-bold text-sm transition">
+                    Member Login
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="max-w-7xl mx-auto px-4 py-12">
+        <h1 class="text-4xl md:text-5xl font-black uppercase mb-2">Exclusive <span class="text-dfred">DJ Pool</span></h1>
+        <p class="text-gray-400 text-lg max-w-2xl">Premium Mixtapes and high-energy Mashups curated for live DJs. Download full sets, transition edits, and club-ready mashups.</p>
+        
+        <!-- Filters -->
+        <div class="flex flex-wrap gap-4 mt-8">
+            <button class="bg-white text-black px-4 py-2 rounded-full font-bold text-sm">All Releases</button>
+            <button class="bg-dfpanel border border-gray-700 hover:border-gray-500 px-4 py-2 rounded-full font-bold text-sm transition">Mixtapes</button>
+            <button class="bg-dfpanel border border-gray-700 hover:border-gray-500 px-4 py-2 rounded-full font-bold text-sm transition">Mashups</button>
+            <button class="bg-dfpanel border border-gray-700 hover:border-gray-500 px-4 py-2 rounded-full font-bold text-sm transition">Afrobeat</button>
+            <button class="bg-dfpanel border border-gray-700 hover:border-gray-500 px-4 py-2 rounded-full font-bold text-sm transition">Amapiano</button>
+        </div>
+    </header>
+
+    <!-- Tracklist/Pool Table -->
+    <main class="max-w-7xl mx-auto px-4">
+        <div class="bg-dfpanel rounded-lg overflow-hidden border border-gray-800">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-black text-gray-400 text-xs uppercase tracking-wider border-b border-gray-800">
+                        <th class="p-4 w-12"></th>
+                        <th class="p-4">Title / Artist</th>
+                        <th class="p-4 hidden md:table-cell">Type</th>
+                        <th class="p-4 hidden sm:table-cell">BPM</th>
+                        <th class="p-4 hidden lg:table-cell">Duration</th>
+                        <th class="p-4 text-right">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="text-sm font-medium">
+                    <!-- Item 1 -->
+                    <tr class="border-b border-gray-800 hover:bg-gray-800 transition group">
+                        <td class="p-4 text-center">
+                            <button class="text-gray-400 hover:text-dfred"><i class="fas fa-play"></i></button>
+                        </td>
+                        <td class="p-4">
+                            <div class="font-bold text-base">Weekend Club Bangers Vol. 4</div>
+                            <div class="text-gray-400 text-xs">Derrick Files Exclusive Mix</div>
+                        </td>
+                        <td class="p-4 hidden md:table-cell"><span class="bg-blue-900 text-blue-300 px-2 py-1 rounded text-xs">Mixtape</span></td>
+                        <td class="p-4 hidden sm:table-cell text-gray-300">100-125</td>
+                        <td class="p-4 hidden lg:table-cell text-gray-400">1:15:00</td>
+                        <td class="p-4 text-right">
+                            <button class="text-gray-400 hover:text-white mr-3"><i class="fas fa-plus"></i></button>
+                            <button class="bg-dfred hover:bg-red-700 text-white p-2 rounded transition"><i class="fas fa-download"></i></button>
+                        </td>
+                    </tr>
+                    
+                    <!-- Item 2 -->
+                    <tr class="border-b border-gray-800 hover:bg-gray-800 transition group">
+                        <td class="p-4 text-center">
+                            <button class="text-gray-400 hover:text-dfred"><i class="fas fa-play"></i></button>
+                        </td>
+                        <td class="p-4">
+                            <div class="font-bold text-base">Water (Amapiano Edit) vs. Tyla</div>
+                            <div class="text-gray-400 text-xs">Derrick Files Transition Mashup</div>
+                        </td>
+                        <td class="p-4 hidden md:table-cell"><span class="bg-purple-900 text-purple-300 px-2 py-1 rounded text-xs">Mashup</span></td>
+                        <td class="p-4 hidden sm:table-cell text-gray-300">112</td>
+                        <td class="p-4 hidden lg:table-cell text-gray-400">03:45</td>
+                        <td class="p-4 text-right">
+                            <button class="text-gray-400 hover:text-white mr-3"><i class="fas fa-plus"></i></button>
+                            <button class="bg-dfred hover:bg-red-700 text-white p-2 rounded transition"><i class="fas fa-download"></i></button>
+                        </td>
+                    </tr>
+
+                     <!-- Item 3 -->
+                     <tr class="border-b border-gray-800 hover:bg-gray-800 transition group">
+                        <td class="p-4 text-center">
+                            <button class="text-gray-400 hover:text-dfred"><i class="fas fa-play"></i></button>
+                        </td>
+                        <td class="p-4">
+                            <div class="font-bold text-base">Afrobeat Heat Wave 2026</div>
+                            <div class="text-gray-400 text-xs">Live Set - DJ Derrick</div>
+                        </td>
+                        <td class="p-4 hidden md:table-cell"><span class="bg-blue-900 text-blue-300 px-2 py-1 rounded text-xs">Mixtape</span></td>
+                        <td class="p-4 hidden sm:table-cell text-gray-300">105-110</td>
+                        <td class="p-4 hidden lg:table-cell text-gray-400">55:20</td>
+                        <td class="p-4 text-right">
+                            <button class="text-gray-400 hover:text-white mr-3"><i class="fas fa-plus"></i></button>
+                            <button class="bg-dfred hover:bg-red-700 text-white p-2 rounded transition"><i class="fas fa-download"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Global Audio Player (Fixed at bottom) -->
+    <div class="fixed bottom-0 left-0 right-0 bg-black border-t border-gray-800 p-3 z-50 flex items-center justify-between">
+        <div class="flex items-center w-1/3">
+            <div class="bg-dfpanel w-12 h-12 rounded flex items-center justify-center mr-3">
+                <i class="fas fa-music text-gray-500"></i>
+            </div>
+            <div class="hidden sm:block">
+                <div class="text-sm font-bold">Water (Amapiano Edit) vs. Tyla</div>
+                <div class="text-xs text-gray-400">Derrick Files Transition Mashup</div>
+            </div>
+        </div>
+        
+        <div class="flex flex-col items-center w-1/3">
+            <div class="flex space-x-6 text-xl">
+                <button class="text-gray-400 hover:text-white"><i class="fas fa-step-backward"></i></button>
+                <button class="text-white hover:text-dfred"><i class="fas fa-play-circle text-3xl"></i></button>
+                <button class="text-gray-400 hover:text-white"><i class="fas fa-step-forward"></i></button>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-end w-1/3 text-gray-400 space-x-4">
+            <i class="fas fa-volume-up hidden sm:block"></i>
+            <div class="w-24 h-1 bg-gray-700 rounded hidden sm:block">
+                <div class="w-2/3 h-1 bg-dfred rounded"></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
