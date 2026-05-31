@@ -82,7 +82,7 @@ body::after{
   content:'';
   position:fixed;
   inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='.04'/%3E%3C/svg%3E");
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' result='noise'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='noise' scale='50'/%3E%3C/filter%3E%3Crect width='256' height='256' fill='%23050505' filter='url(%23f)'/%3E%3C/svg%3E");
   pointer-events:none;
   z-index:8999;
   opacity:.35;
@@ -1021,7 +1021,7 @@ ins.adsbygoogle{
 <!-- ══ GEAR STORE & RENTAL SECTION ══ -->
 <section id="gear-store" class="sec">
   <span class="sec-label">Shop & Rental · Plot 1 Bukoto St</span>
-  <h2 class="sec-title">DJ <span style="color:var(--gold);">Gear Store</span></h2>
+  <h2 class="sec-title">DJ <span style="color:var(--gold);">GEAR STORE</span></h2>
   
   <!-- Featured Product -->
   <div class="feat-hero fade-in">
@@ -1034,12 +1034,23 @@ ins.adsbygoogle{
       <h2 class="feat-title">The CDJ-3000 Multi-Player</h2>
       <p style="font-size:.9rem;color:var(--muted2);line-height:1.7;margin-bottom:16px;">The global standard for professional DJing. Featuring 9-inch HD touchscreen, WiFi streaming, and the most responsive jog wheel ever built by Pioneer DJ. Used in every major club worldwide.</p>
       <div class="feat-specs">
-        <div class="spec"><div class="spec-l">Display</div><div class="spec-v">9" HD Touch</div></div>
-        <div class="spec"><div class="spec-l">Jog Dial</div><div class="spec-v">210mm</div></div>
-        <div class="spec"><div class="spec-l">Connectivity</div><div class="spec-v">WiFi, LAN, USB</div></div>
-        <div class="spec"><div class="spec-l">Verified</div><div class="spec-v" style="color:var(--green)">✓ YES</div></div>
+        <div class="spec">
+          <div class="spec-l">Resolution</div>
+          <div class="spec-v">3840×2160 HD</div>
+        </div>
+        <div class="spec">
+          <div class="spec-l">Connectivity</div>
+          <div class="spec-v">USB/Ethernet</div>
+        </div>
+        <div class="spec">
+          <div class="spec-l">Interface</div>
+          <div class="spec-v">Touchscreen</div>
+        </div>
+        <div class="spec">
+          <div class="spec-l">Audio Format</div>
+          <div class="spec-v">MP3 / WAV</div>
+        </div>
       </div>
-      <div style="margin-bottom:6px;"><span style="font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);letter-spacing:.04em;">UGX 12,500,000</span></div>
       <div style="font-family:'Space Mono',monospace;font-size:.42rem;color:rgba(10,132,255,.85);margin-bottom:18px;">Rental: UGX 150,000/day</div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;">
         <button class="btn btn-gold" onclick="alert('UPDATE: Connect to payment page\nWhatsApp: +256 789 191 660')">Buy Now</button>
@@ -1053,6 +1064,7 @@ ins.adsbygoogle{
   <h3 class="sec-title" style="font-size:2rem;">Shop by Category</h3>
   <div class="filter-bar">
     <button class="ftab on" onclick="filterGear(this,'all')">All Equipment</button>
+    <button class="ftab" onclick="filterGear(this,'cdjs')">CDJs</button>
     <button class="ftab" onclick="filterGear(this,'controllers')">Controllers</button>
     <button class="ftab" onclick="filterGear(this,'mixers')">Mixers</button>
     <button class="ftab" onclick="filterGear(this,'headphones')">Headphones</button>
@@ -1064,16 +1076,36 @@ ins.adsbygoogle{
   <div class="gear-grid">
     <div class="gear-card fade-in" data-cat="controllers">
       <div class="gear-img" style="background:linear-gradient(135deg,rgba(245,166,35,.08),var(--dark) 80%)">
-        <div class="gear-img-ph"><svg viewBox="0 0 24 24"><path d="M12 3v9.28a4.39 4.39 0 00-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z"/></svg><span>📷 Add photo</span></div><span class="gear-badge g-new">NEW</span>
+        <div class="gear-img-ph"><svg viewBox="0 0 24 24"><path d="M12 3v9.28a4.39 4.39 0 00-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z"/></svg><span>📷 Add photo</span></div>
       </div>
       <div class="gear-body">
         <div class="gear-brand">Pioneer</div>
-        <div class="gear-name">CDJ-3000</div>
-        <div class="gear-desc">Industry-standard. 9-inch HD touchscreen, WiFi, waveform display.</div>
+        <div class="gear-name">DDJ-1000 Controller</div>
+        <div class="gear-desc">4-channel controller with 7-inch touchscreen and responsive jog wheels.</div>
         <div class="gear-stars">★★★★★</div>
-        <div class="gear-verified">✓ Used by Derrick Files</div>
-        <div class="gear-price">UGX 12,500,000</div>
-        <div class="gear-rent-price">Rent: UGX 150,000/day</div>
+        <div class="gear-verified">✓ In Stock</div>
+        <div class="gear-price">UGX 4,200,000</div>
+        <div class="gear-rent-price">Rent: UGX 80,000/day</div>
+        <div class="gear-btns">
+          <button class="gb buy" onclick="alert('UPDATE: Link to payment\nContact: +256 789 191 660')">Buy Now</button>
+          <a href="https://wa.me/256789191660?text=I want to enquire about: Pioneer DDJ-1000" target="_blank" rel="noopener" class="gb wa">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="gear-card fade-in" data-cat="cdjs">
+      <div class="gear-img" style="background:linear-gradient(135deg,rgba(245,166,35,.08),var(--dark) 80%)">
+        <div class="gear-badge g-new">NEW</div>
+        <div class="gear-img-ph"><svg viewBox="0 0 24 24"><path d="M12 3v9.28a4.39 4.39 0 00-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z"/></svg><span>📷 Add photo</span></div>
+      </div>
+      <div class="gear-body">
+        <div class="gear-brand">Pioneer</div>
+        <div class="gear-name">CDJ-3000 Deck</div>
+        <div class="gear-desc">Industry standard multi-player with HD touchscreen and WiFi connectivity.</div>
+        <div class="gear-stars">★★★★★</div>
+        <div class="gear-verified">✓ Club Ready</div>
+        <div class="gear-price">UGX 8,500,000</div>
+        <div class="gear-rent-price">Rent: UGX 200,000/day</div>
         <div class="gear-btns">
           <button class="gb buy" onclick="alert('UPDATE: Link to payment\nContact: +256 789 191 660')">Buy Now</button>
           <a href="https://wa.me/256789191660?text=I want to enquire about: Pioneer CDJ-3000" target="_blank" rel="noopener" class="gb wa">WhatsApp</a>
@@ -1082,16 +1114,16 @@ ins.adsbygoogle{
     </div>
 
     <div class="gear-card fade-in" data-cat="mixers">
-      <div class="gear-img" style="background:linear-gradient(135deg,rgba(255,59,48,.06),var(--dark) 80%)">
-        <div class="gear-img-ph"><svg viewBox="0 0 24 24"><path d="M12 3v9.28a4.39 4.39 0 00-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z"/></svg><span>📷 Add photo</span></div><span class="gear-badge g-hot">HOT</span>
+      <div class="gear-img" style="background:linear-gradient(135deg,rgba(245,166,35,.08),var(--dark) 80%)">
+        <div class="gear-img-ph"><svg viewBox="0 0 24 24"><path d="M12 3v9.28a4.39 4.39 0 00-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z"/></svg><span>📷 Add photo</span></div>
       </div>
       <div class="gear-body">
         <div class="gear-brand">Pioneer</div>
-        <div class="gear-name">DJM-900NXS2</div>
-        <div class="gear-desc">4-channel professional mixer — the club standard worldwide.</div>
+        <div class="gear-name">DJM-900NXS2 Mixer</div>
+        <div class="gear-desc">4-channel mixer with effects and customizable filters. Club standard.</div>
         <div class="gear-stars">★★★★★</div>
-        <div class="gear-verified">✓ Used by Derrick Files</div>
-        <div class="gear-price">UGX 9,800,000</div>
+        <div class="gear-verified">✓ Professional</div>
+        <div class="gear-price">UGX 6,800,000</div>
         <div class="gear-rent-price">Rent: UGX 120,000/day</div>
         <div class="gear-btns">
           <button class="gb buy" onclick="alert('UPDATE: Link to payment\nContact: +256 789 191 660')">Buy Now</button>
@@ -1100,46 +1132,28 @@ ins.adsbygoogle{
       </div>
     </div>
 
-    <div class="gear-card fade-in" data-cat="headphones">
-      <div class="gear-img" style="background:linear-gradient(135deg,rgba(10,132,255,.06),var(--dark) 80%)">
-        <div class="gear-img-ph"><svg viewBox="0 0 24 24"><path d="M12 3v9.28a4.39 4.39 0 00-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z"/></svg><span>📷 Add photo</span></div>
-      </div>
-      <div class="gear-body">
-        <div class="gear-brand">Sennheiser</div>
-        <div class="gear-name">HD 25</div>
-        <div class="gear-desc">DJ headphones built for loud environments. Legendary monitoring.</div>
-        <div class="gear-stars">★★★★★</div>
-        <div class="gear-verified">✓ Used by Derrick Files</div>
-        <div class="gear-price">UGX 680,000</div>
-        <div class="gear-rent-price">Rent: UGX 25,000/day</div>
-        <div class="gear-btns">
-          <button class="gb buy" onclick="alert('UPDATE: Link to payment\nContact: +256 789 191 660')">Buy Now</button>
-          <a href="https://wa.me/256789191660?text=I want to enquire about: Sennheiser HD 25" target="_blank" rel="noopener" class="gb wa">WhatsApp</a>
-        </div>
-      </div>
-    </div>
-
     <div class="gear-card fade-in" data-cat="turntables">
-      <div class="gear-img" style="background:linear-gradient(135deg,rgba(255,59,48,.06),var(--dark) 80%)">
+      <div class="gear-img" style="background:linear-gradient(135deg,rgba(245,166,35,.08),var(--dark) 80%)">
+        <div class="gear-badge g-new">VERIFIED</div>
         <div class="gear-img-ph"><svg viewBox="0 0 24 24"><path d="M12 3v9.28a4.39 4.39 0 00-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z"/></svg><span>📷 Add photo</span></div>
       </div>
       <div class="gear-body">
         <div class="gear-brand">Technics</div>
-        <div class="gear-name">SL-1210MK7</div>
+        <div class="gear-name">SL-1200MK7</div>
         <div class="gear-desc">Classic vinyl turntable legend — precision torque, direct-drive.</div>
         <div class="gear-stars">★★★★★</div>
         <div class="gear-verified">✓ Used by Derrick Files</div>
         <div class="gear-price">UGX 7,200,000</div>
-        <div class="gear-rent-price">Rent: UGX 80,000/day</div>
+        <div class="gear-rent-price">Rent: UGX 100,000/day</div>
         <div class="gear-btns">
           <button class="gb buy" onclick="alert('UPDATE: Link to payment\nContact: +256 789 191 660')">Buy Now</button>
-          <a href="https://wa.me/256789191660?text=I want to enquire about: Technics SL-1210MK7" target="_blank" rel="noopener" class="gb wa">WhatsApp</a>
+          <a href="https://wa.me/256789191660?text=I want to enquire about: Technics SL-1200MK7" target="_blank" rel="noopener" class="gb wa">WhatsApp</a>
         </div>
       </div>
     </div>
 
     <div class="gear-card fade-in" data-cat="speakers">
-      <div class="gear-img" style="background:linear-gradient(135deg,rgba(245,166,35,.06),var(--dark) 80%)">
+      <div class="gear-img" style="background:linear-gradient(135deg,rgba(245,166,35,.08),var(--dark) 80%)">
         <div class="gear-img-ph"><svg viewBox="0 0 24 24"><path d="M12 3v9.28a4.39 4.39 0 00-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z"/></svg><span>📷 Add photo</span></div>
       </div>
       <div class="gear-body">
@@ -1151,22 +1165,22 @@ ins.adsbygoogle{
         <div class="gear-rent-price">Rent: UGX 60,000/day</div>
         <div class="gear-btns">
           <button class="gb buy" onclick="alert('UPDATE: Link to payment\nContact: +256 789 191 660')">Buy Now</button>
-          <a href="https://wa.me/256789191660?text=I want to enquire about: QSC K12.2" target="_blank" rel="noopener" class="gb wa">WhatsApp</a>
+          <a href="https://wa.me/256789191660?text=I want to enquire about: Chauvet DJ Intimidator Spot" target="_blank" rel="noopener" class="gb wa">WhatsApp</a>
         </div>
       </div>
     </div>
 
     <div class="gear-card fade-in" data-cat="lighting">
-      <div class="gear-img" style="background:linear-gradient(135deg,rgba(124,58,237,.06),var(--dark) 80%)">
-        <div class="gear-img-ph"><svg viewBox="0 0 24 24"><path d="M12 3v9.28a4.39 4.39 0 00-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z"/></svg><span>📷 Add photo</span></div><span class="gear-badge g-sale">SALE</span>
+      <div class="gear-img" style="background:linear-gradient(135deg,rgba(245,166,35,.08),var(--dark) 80%)">
+        <div class="gear-img-ph"><svg viewBox="0 0 24 24"><path d="M12 3v9.28a4.39 4.39 0 00-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z"/></svg><span>📷 Add photo</span></div>
       </div>
       <div class="gear-body">
-        <div class="gear-brand">Chauvet DJ</div>
+        <div class="gear-brand">Chauvet</div>
         <div class="gear-name">Intimidator Spot</div>
-        <div class="gear-desc">LED moving head spotlight — festival-quality.</div>
-        <div class="gear-stars">★★★★☆</div>
-        <div class="gear-price">UGX 2,100,000</div>
-        <div class="gear-rent-price">Rent: UGX 45,000/day</div>
+        <div class="gear-desc">150W LED moving head light — professional productions.</div>
+        <div class="gear-stars">★★★★★</div>
+        <div class="gear-price">UGX 1,200,000</div>
+        <div class="gear-rent-price">Rent: UGX 25,000/day</div>
         <div class="gear-btns">
           <button class="gb buy" onclick="alert('UPDATE: Link to payment\nContact: +256 789 191 660')">Buy Now</button>
           <a href="https://wa.me/256789191660?text=I want to enquire about: Chauvet DJ Intimidator Spot" target="_blank" rel="noopener" class="gb wa">WhatsApp</a>
@@ -1212,3 +1226,134 @@ ins.adsbygoogle{
   </div>
 </section>
 
+<div class="hr"></div>
+
+<!-- ══ AUDIO STREAMING SECTION ══ -->
+<section id="audio-streaming" class="sec">
+  <span class="sec-label">Premium Audio Library</span>
+  <h2 class="sec-title">AUDIO <span style="color:var(--gold);">STREAMING</span></h2>
+  
+  <div style="background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:32px;">
+    <iframe 
+      src="/audio-player.html" 
+      style="width:100%;height:700px;border:none;border-radius:8px;background:var(--dark);"
+      title="Audio Player">
+    </iframe>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-grid">
+    <div class="ft-brand">
+      <div class="ft-name">DERRICK FILES STUDIO</div>
+      <div class="ft-sub">Kampala, Uganda</div>
+      <p>Professional DJ services, equipment rentals, expert repairs, and production masterclasses. Located at Plot 1 Bukoto Street, Kampala.</p>
+    </div>
+    <div class="ft-col">
+      <h4>Quick Links</h4>
+      <a href="#home">Home</a>
+      <a href="#gear-store">Shop</a>
+      <a href="#gear-repair">Repairs</a>
+      <a href="#audio-streaming">Audio</a>
+    </div>
+    <div class="ft-col">
+      <h4>Services</h4>
+      <a href="#gear-repair">Equipment Rentals</a>
+      <a href="#gear-repair">Repairs & Diagnostics</a>
+      <a href="#audio-streaming">Audio Streaming</a>
+      <a href="https://wa.me/256789191660" target="_blank">Book Services</a>
+    </div>
+    <div class="ft-col">
+      <h4>Contact</h4>
+      <a href="tel:+256789191660">+256 789 191 660</a>
+      <a href="https://wa.me/256789191660" target="_blank">WhatsApp</a>
+      <a href="mailto:info@derrickfiles.com">Email</a>
+      <a href="#home">Location</a>
+    </div>
+  </div>
+
+  <div class="ft-bot">
+    <div class="ft-copy">© 2025 Derrick Files Studio. All Rights Reserved. 🎧</div>
+    <div class="ft-socials">
+      <a href="https://facebook.com/derrickfiles" target="_blank" rel="noopener" title="Facebook">f</a>
+      <a href="https://instagram.com/derrickfiles" target="_blank" rel="noopener" title="Instagram">📷</a>
+      <a href="https://twitter.com/derrickfiles" target="_blank" rel="noopener" title="Twitter">𝕏</a>
+      <a href="https://youtube.com/derrickfiles" target="_blank" rel="noopener" title="YouTube">▶</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Mobile Menu Toggle
+document.getElementById('BURGER').addEventListener('click',function(){
+  document.getElementById('DRAWER').classList.toggle('open');
+  this.classList.toggle('open');
+});
+
+// Close drawer on link click
+document.querySelectorAll('#DRAWER a').forEach(link=>{
+  link.addEventListener('click',()=>{
+    document.getElementById('DRAWER').classList.remove('open');
+    document.getElementById('BURGER').classList.remove('open');
+  });
+});
+
+// Custom cursor
+let cur=document.getElementById('CUR'),cur2=document.getElementById('CUR2');
+document.addEventListener('mousemove',e=>{
+  cur.style.left=e.clientX+'px';
+  cur.style.top=e.clientY+'px';
+  cur2.style.left=e.clientX+'px';
+  cur2.style.top=e.clientY+'px';
+});
+
+// Intersection Observer for fade-in animations
+const observerOptions={threshold:.1,rootMargin:'0px 0px -50px 0px'};
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+},observerOptions);
+
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+
+// Gear filter
+function filterGear(btn,cat){
+  document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.gear-card').forEach(card=>{
+    if(cat==='all'||card.getAttribute('data-cat')===cat){
+      card.style.display='flex';
+    }else{
+      card.style.display='none';
+    }
+  });
+}
+
+// Active navigation link
+window.addEventListener('scroll',()=>{
+  let current='';
+  document.querySelectorAll('section[id]').forEach(section=>{
+    const sectionTop=section.offsetTop;
+    const sectionHeight=section.clientHeight;
+    if(pageYOffset>=sectionTop-200){
+      current=section.getAttribute('id');
+    }
+  });
+  
+  document.querySelectorAll('.nlinks a, #DRAWER a').forEach(link=>{
+    link.classList.remove('act');
+    if(link.getAttribute('href').slice(1)===current){
+      link.classList.add('act');
+    }
+  });
+});
+
+// Init AdSense
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</body>
+</html>
