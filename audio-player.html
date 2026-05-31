@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audio Player - Derrick Files</title>
+  <style>
+    :root {
+      --gold: #F5A623;
+      --gold2: #E8820C;
+      --black: #050505;
+      --dark: #0C0C0C;
+      --card: #111;
+      --card2: #181818;
+      --border: #1E1E1E;
+      --border2: rgba(245, 166, 35, 0.2);
+      --text: #F0F0F0;
+      --muted: #555;
+      --muted2: #888;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      padding: 20px;
+    }
+
+    .audio-player-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ═══ HEADER ═══ */
+    .ap-header {
+      margin-bottom: 32px;
+    }
+
+    .ap-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .ap-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+      line-height: 1;
+    }
+
+    .ap-title span {
+      color: var(--gold);
+    }
+
+    .ap-desc {
+      font-size: 0.9rem;
+      color: var(--muted2);
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    /* ═══ PLAYER MAIN ═══ */
+    .ap-player {
+      background: var(--card);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      padding: 28px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ap-player::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    /* Now Playing Display */
+    .now-playing {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 28px;
+      align-items: flex-start;
+    }
+
+    .np-cover {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, rgba(245, 166, 35, 0.15), var(--dark));
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .np-cover.playing {
+      animation: coverPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes coverPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(245, 166, 35, 0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(245, 166, 35, 0); }
+    }
+
+    .np-cover svg {
+      width: 44px;
+      height: 44px;
+      opacity: 0.4;
+      fill: var(--gold);
+    }
+
+    .np-cover.loaded {
+      background-size: cover;
+      background-position: center;
+    }
+
+    .np-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .np-track {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .np-artist {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .np-time {
+      display: flex;
+      gap: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted2);
+    }
+
+    /* Progress Bar */
+    .progress-section {
+      margin-bottom: 24px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      cursor: pointer;
+      margin-bottom: 8px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gold);
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      align-items: center;
+    }
+
+    .play-btn {
+      width: 48px;
+      height: 48px;
+      background: var(--gold);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .play-btn:hover {
+      background: #fff;
+      transform: scale(1.05);
+    }
+
+    .play-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--black);
+    }
+
+    .control-btn {
+      width: 38px;
+      height: 38px;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .control-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .control-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    .volume-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    .volume-slider {
+      width: 100px;
+      height: 4px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: var(--border);
+      outline: none;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      background: var(--gold);
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    .volume-slider::-moz-range-thumb {
+      width: 12px;
+      height: 12px;
+      background: var(--gold);
+      cursor: pointer;
+      border-radius: 50%;
+      border: none;
+    }
+
+    /* Visualizer */
+    .visualizer {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      height: 32px;
+      margin-bottom: 24px;
+    }
+
+    .visualizer-bar {
+      flex: 1;
+      background: linear-gradient(180deg, var(--gold), var(--gold2));
+      border-radius: 2px;
+      height: 8px;
+      opacity: 0.6;
+      animation: visualizerPulse 0.4s ease-in-out infinite;
+    }
+
+    @keyframes visualizerPulse {
+      0%, 100% { height: 8px; }
+      50% { height: 24px; }
+    }
+
+    /* ═══ PLAYLISTS ═══ */
+    .ap-playlists {
+      margin-top: 40px;
+    }
+
+    .ap-playlists-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 16px;
+    }
+
+    .playlist-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .playlist-tab {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--muted2);
+      cursor: pointer;
+      transition: all 0.2s;
+      border-radius: 4px;
+    }
+
+    .playlist-tab.active {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(245, 166, 35, 0.08);
+    }
+
+    .playlist-tab:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .tracks-list {
+      display: none;
+    }
+
+    .tracks-list.active {
+      display: block;
+    }
+
+    .track-item {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      padding: 14px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s;
+    }
+
+    .track-item:hover {
+      border-color: var(--gold);
+      background: var(--card);
+    }
+
+    .track-item.playing {
+      border-color: var(--gold);
+      background: rgba(245, 166, 35, 0.08);
+    }
+
+    .track-number {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      min-width: 30px;
+    }
+
+    .track-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .track-name {
+      font-size: 0.9rem;
+      margin-bottom: 2px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .track-artist {
+      font-size: 0.75rem;
+      color: var(--muted2);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .track-duration {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .track-play-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      opacity: 0;
+    }
+
+    .track-item:hover .track-play-icon {
+      opacity: 1;
+    }
+
+    .track-item.playing .track-play-icon {
+      opacity: 1;
+    }
+
+    /* ═══ SETUP GUIDE ═══ */
+    .setup-guide {
+      background: rgba(245, 166, 35, 0.05);
+      border: 1px dashed var(--border2);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 28px;
+    }
+
+    .setup-guide h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .setup-guide p {
+      font-size: 0.85rem;
+      color: var(--muted2);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .setup-guide code {
+      background: var(--dark);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--gold);
+    }
+
+    .config-input {
+      width: 100%;
+      background: var(--dark);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 4px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      margin: 10px 0;
+    }
+
+    .config-input::placeholder {
+      color: var(--muted);
+    }
+
+    .config-btn {
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .config-btn:hover {
+      background: #fff;
+    }
+
+    @media (max-width: 600px) {
+      .ap-player {
+        padding: 16px;
+      }
+
+      .now-playing {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .np-cover {
+        width: 80px;
+        height: 80px;
+      }
+
+      .volume-control {
+        margin-left: 0;
+        width: 100%;
+        margin-top: 12px;
+      }
+
+      .volume-slider {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="audio-player-container">
+    <!-- Header -->
+    <div class="ap-header">
+      <span class="ap-label">Audio Platform</span>
+      <h1 class="ap-title">AUDIO <span>STREAMING</span></h1>
+      <p class="ap-desc">Listen to DJ mixes, production tracks, and studio sessions directly from your Cloudflare R2 storage.</p>
+    </div>
+
+    <!-- Setup Guide -->
+    <div class="setup-guide">
+      <h3>🚀 Setup Your Cloudflare R2</h3>
+      <p><strong>Step 1:</strong> Create a Cloudflare R2 bucket at <code>dash.cloudflare.com</code></p>
+      <p><strong>Step 2:</strong> Get your Public Bucket URL (looks like: <code>https://bucket-name.account-id.r2.dev</code>)</p>
+      <p><strong>Step 3:</strong> Paste it below to connect:</p>
+      <input type="text" class="config-input" id="bucketUrlInput" placeholder="https://your-bucket.account-id.r2.dev" value="">
+      <button class="config-btn" onclick="configureBucket()">Connect Bucket</button>
+      <p style="font-size: 0.75rem; color: var(--muted); margin-top: 10px;">Your bucket must be publicly readable. Upload MP3 files to: <code>/mixes</code>, <code>/productions</code>, or <code>/sessions</code> folders.</p>
+    </div>
+
+    <!-- Main Player -->
+    <div class="ap-player">
+      <!-- Now Playing -->
+      <div class="now-playing">
+        <div class="np-cover" id="npCover">
+          <svg viewBox="0 0 24 24"><path d="M12 3v9.28a4.39 4.39 0 00-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z"/></svg>
+        </div>
+        <div class="np-info">
+          <div class="np-artist" id="npArtist">Ready to Play</div>
+          <div class="np-track" id="npTrack">Select a track to begin</div>
+          <div class="np-time">
+            <span id="currentTime">0:00</span>
+            <span>/</span>
+            <span id="duration">0:00</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visualizer -->
+      <div class="visualizer" id="visualizer" style="display: none;">
+        <div class="visualizer-bar" style="animation-delay: 0s;"></div>
+        <div class="visualizer-bar" style="animation-delay: 0.1s;"></div>
+        <div class="visualizer-bar" style="animation-delay: 0.2s;"></div>
+        <div class="visualizer-bar" style="animation-delay: 0.3s;"></div>
+        <div class="visualizer-bar" style="animation-delay: 0.4s;"></div>
+      </div>
+
+      <!-- Progress -->
+      <div class="progress-section">
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls">
+        <button class="control-btn" id="prevBtn" title="Previous">
+          <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+        </button>
+        <button class="play-btn" id="playBtn" title="Play">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button class="control-btn" id="nextBtn" title="Next">
+          <svg viewBox="0 0 24 24"><path d="M16 18h2V6h-2zm-11-7l8.5-6v12z"/></svg>
+        </button>
+
+        <div class="volume-control">
+          <svg style="width: 16px; height: 16px; fill: var(--muted2);" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+          <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="70">
+        </div>
+      </div>
+
+      <!-- Hidden Audio Element -->
+      <audio id="audioPlayer" crossorigin="anonymous"></audio>
+    </div>
+
+    <!-- Playlists -->
+    <div class="ap-playlists">
+      <h2 class="ap-playlists-title">Playlists</h2>
+      <div class="playlist-tabs">
+        <button class="playlist-tab active" onclick="switchPlaylist('mixes')">DJ Mixes</button>
+        <button class="playlist-tab" onclick="switchPlaylist('productions')">Originals</button>
+        <button class="playlist-tab" onclick="switchPlaylist('sessions')">Sessions</button>
+      </div>
+
+      <!-- Mixes Playlist -->
+      <div id="mixes" class="tracks-list active"></div>
+
+      <!-- Productions Playlist -->
+      <div id="productions" class="tracks-list"></div>
+
+      <!-- Sessions Playlist -->
+      <div id="sessions" class="tracks-list"></div>
+    </div>
+  </div>
+
+  <script>
+    // Audio Player State
+    let audio = document.getElementById('audioPlayer');
+    let currentPlaylist = 'mixes';
+    let currentTrackIndex = 0;
+    let isPlaying = false;
+    let bucketUrl = localStorage.getItem('bucketUrl') || '';
+    let playlists = {
+      mixes: [],
+      productions: [],
+      sessions: []
+    };
+
+    // Initialize bucket URL if saved
+    if (bucketUrl) {
+      document.getElementById('bucketUrlInput').value = bucketUrl;
+      loadPlaylists();
+    }
+
+    // Configure bucket
+    async function configureBucket() {
+      const url = document.getElementById('bucketUrlInput').value.trim();
+      if (!url) {
+        alert('Please enter your Cloudflare R2 bucket URL');
+        return;
+      }
+      bucketUrl = url;
+      localStorage.setItem('bucketUrl', bucketUrl);
+      await loadPlaylists();
+    }
+
+    // Load playlists from R2
+    async function loadPlaylists() {
+      if (!bucketUrl) return;
+
+      for (const [folderName, playlist] of Object.entries(playlists)) {
+        try {
+          // Create sample tracks (in production, you'd list from R2)
+          const sampleTracks = [
+            { name: 'Deep House Mix', artist: 'Derrick Files', duration: 3600 },
+            { name: 'Tech Vibes', artist: 'Derrick Files', duration: 2880 },
+            { name: 'Summer Jam', artist: 'Derrick Files', duration: 4200 },
+          ];
+
+          playlists[folderName] = sampleTracks.map((track, idx) => ({
+            ...track,
+            url: `${bucketUrl}/${folderName}/${track.name.replace(/\s+/g, '-').toLowerCase()}.mp3`,
+            id: `${folderName}-${idx}`
+          }));
+
+          renderPlaylist(folderName);
+        } catch (error) {
+          console.error(`Failed to load ${folderName}:`, error);
+        }
+      }
+    }
+
+    // Render playlist
+    function renderPlaylist(folderName) {
+      const container = document.getElementById(folderName);
+      const tracks = playlists[folderName];
+
+      container.innerHTML = tracks.map((track, idx) => `
+        <div class="track-item" onclick="playTrack('${folderName}', ${idx})">
+          <div class="track-number">${idx + 1}</div>
+          <div class="track-info">
+            <div class="track-name">${track.name}</div>
+            <div class="track-artist">${track.artist}</div>
+          </div>
+          <div class="track-duration">${formatTime(track.duration)}</div>
+          <div class="track-play-icon">▶</div>
+        </div>
+      `).join('');
+    }
+
+    // Play track
+    function playTrack(playlist, index) {
+      currentPlaylist = playlist;
+      currentTrackIndex = index;
+      const track = playlists[playlist][index];
+
+      audio.src = track.url;
+      audio.play();
+      isPlaying = true;
+
+      updateUI();
+      document.getElementById('visualizer').style.display = 'flex';
+
+      // Update now playing
+      document.getElementById('npTrack').textContent = track.name;
+      document.getElementById('npArtist').textContent = track.artist;
+
+      // Switch to correct tab
+      switchPlaylist(playlist);
+    }
+
+    // Switch playlist
+    function switchPlaylist(playlist) {
+      currentPlaylist = playlist;
+      document.querySelectorAll('.playlist-tab').forEach((btn, idx) => {
+        const playlists = ['mixes', 'productions', 'sessions'];
+        btn.classList.toggle('active', playlists[idx] === playlist);
+      });
+      document.querySelectorAll('.tracks-list').forEach(list => {
+        list.classList.remove('active');
+      });
+      document.getElementById(playlist).classList.add('active');
+    }
+
+    // Play/Pause
+    document.getElementById('playBtn').addEventListener('click', () => {
+      if (playlists[currentPlaylist].length === 0) {
+        alert('No tracks loaded. Configure your Cloudflare R2 bucket first.');
+        return;
+      }
+      if (isPlaying) {
+        audio.pause();
+      } else {
+        if (!audio.src) {
+          playTrack(currentPlaylist, 0);
+        } else {
+          audio.play();
+        }
+      }
+    });
+
+    // Update UI on play/pause
+    audio.addEventListener('play', () => {
+      isPlaying = true;
+      updateUI();
+      document.getElementById('visualizer').style.display = 'flex';
+    });
+
+    audio.addEventListener('pause', () => {
+      isPlaying = false;
+      updateUI();
+    });
+
+    // Update progress
+    audio.addEventListener('timeupdate', () => {
+      const percent = (audio.currentTime / audio.duration) * 100;
+      document.getElementById('progressFill').style.width = percent + '%';
+      document.getElementById('currentTime').textContent = formatTime(audio.currentTime);
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      document.getElementById('duration').textContent = formatTime(audio.duration);
+    });
+
+    // Next/Prev
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      const playlist = playlists[currentPlaylist];
+      currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+      playTrack(currentPlaylist, currentTrackIndex);
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      const playlist = playlists[currentPlaylist];
+      currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+      playTrack(currentPlaylist, currentTrackIndex);
+    });
+
+    // Volume
+    document.getElementById('volumeSlider').addEventListener('input', (e) => {
+      audio.volume = e.target.value / 100;
+    });
+
+    // Progress bar seek
+    document.getElementById('progressBar').addEventListener('click', (e) => {
+      const rect = e.target.getBoundingClientRect();
+      const percent = (e.clientX - rect.left) / rect.width;
+      audio.currentTime = percent * audio.duration;
+    });
+
+    // Update UI
+    function updateUI() {
+      const tracks = document.querySelectorAll('.track-item');
+      tracks.forEach((el, idx) => {
+        el.classList.toggle('playing', idx === currentTrackIndex && isPlaying);
+      });
+
+      const icon = document.getElementById('playBtn').querySelector('svg');
+      if (isPlaying) {
+        icon.innerHTML = '<path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>';
+      } else {
+        icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+      }
+
+      const cover = document.getElementById('npCover');
+      if (isPlaying) {
+        cover.classList.add('playing');
+      } else {
+        cover.classList.remove('playing');
+      }
+    }
+
+    // Format time
+    function formatTime(seconds) {
+      if (!seconds || isNaN(seconds)) return '0:00';
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+  </script>
+</body>
+</html>
