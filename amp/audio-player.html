@@ -1,0 +1,323 @@
+<!doctype html>
+<html ⚡ lang="en">
+<head>
+  <meta charset="utf-8">
+  <script async src="https://cdn.ampproject.org/v0.js"></script>
+  <title>Audio Player - Derrick Files</title>
+  <link rel="canonical" href="https://derrickfiles.com/audio-player.html">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <meta name="description" content="Stream DJ mixes, productions, and sessions directly from Cloudflare R2">
+  <script async custom-element="amp-auto-ads"
+          src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+  </script>
+  <script async custom-element="amp-audio"
+          src="https://cdn.ampproject.org/v0/amp-audio-0.1.js">
+  </script>
+  <script async custom-element="amp-sidebar"
+          src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js">
+  </script>
+  <style amp-custom>
+    :root {
+      --gold: #F5A623;
+      --black: #050505;
+      --dark: #0C0C0C;
+      --card: #111;
+      --card2: #181818;
+      --border: #1E1E1E;
+      --text: #F0F0F0;
+      --muted: #555;
+      --muted2: #888;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      padding: 20px;
+    }
+
+    .audio-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .ap-header {
+      margin-bottom: 32px;
+    }
+
+    .ap-label {
+      font-size: 0.5rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .ap-title {
+      font-weight: 700;
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+      line-height: 1;
+    }
+
+    .ap-title span {
+      color: var(--gold);
+    }
+
+    .ap-desc {
+      font-size: 0.9rem;
+      color: var(--muted2);
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    .ap-player {
+      background: var(--card);
+      border: 1px solid #1E1E1E;
+      border-radius: 8px;
+      padding: 28px;
+      margin-bottom: 28px;
+    }
+
+    .player-info {
+      margin-bottom: 20px;
+    }
+
+    .now-playing {
+      margin-bottom: 20px;
+    }
+
+    .np-track {
+      font-weight: 700;
+      font-size: 1.4rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+
+    .np-artist {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    amp-audio {
+      width: 100%;
+      margin: 20px 0;
+    }
+
+    .tracks-list {
+      margin-top: 40px;
+    }
+
+    .tracks-title {
+      font-weight: 700;
+      font-size: 1.4rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 16px;
+    }
+
+    .track-item {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      padding: 14px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .track-item:hover {
+      border-color: var(--gold);
+      background: var(--card);
+    }
+
+    .track-number {
+      font-size: 0.7rem;
+      color: var(--muted);
+      min-width: 30px;
+    }
+
+    .track-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .track-name {
+      font-size: 0.9rem;
+      margin-bottom: 2px;
+    }
+
+    .track-artist {
+      font-size: 0.75rem;
+      color: var(--muted2);
+    }
+
+    .track-duration {
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .status-badge {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 6px 12px;
+      background: rgba(48, 209, 88, 0.1);
+      border: 1px solid rgba(48, 209, 88, 0.3);
+      border-radius: 4px;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #30D158;
+    }
+
+    .ad-container {
+      display: flex;
+      justify-content: center;
+      margin: 32px 0;
+      padding: 0 16px;
+    }
+
+    .ad-wrapper {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 12px;
+      width: 100%;
+      max-width: 728px;
+    }
+
+    @media(min-width: 768px) {
+      body {
+        padding: 40px;
+      }
+
+      .ap-player {
+        padding: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ AMP AUTO ADS ══ -->
+<amp-auto-ads type="adsense"
+        data-ad-client="ca-pub-3712510054149886">
+</amp-auto-ads>
+
+<!-- ══ HEADER ══ -->
+<header style="position: fixed; top: 0; left: 0; right: 0; z-index: 600; height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background: rgba(5, 5, 5, 0.96); border-bottom: 1px solid #1E1E1E;">
+  <a href="/" style="text-decoration: none; color: var(--gold); font-weight: 700;">DERRICK FILES</a>
+  <a href="https://wa.me/256789191660?text=I want to book your services" style="background: var(--gold); color: var(--black); padding: 8px 14px; text-decoration: none; font-weight: 700; font-size: 0.5rem; text-transform: uppercase;">Book Now</a>
+</header>
+
+<div style="height: 60px;"></div>
+
+<div class="audio-container">
+  <!-- Header -->
+  <div class="ap-header">
+    <span class="ap-label">Audio Platform</span>
+    <h1 class="ap-title">AUDIO <span>STREAMING</span></h1>
+    <p class="ap-desc">Listen to DJ mixes, production tracks, and studio sessions streamed live from Cloudflare R2.</p>
+    <div class="status-badge">✓ Connected</div>
+  </div>
+
+  <!-- Player -->
+  <div class="ap-player">
+    <div class="now-playing">
+      <div class="np-artist">Derrick Files Studio</div>
+      <div class="np-track">Audio Streaming Ready</div>
+    </div>
+
+    <amp-audio id="player1"
+               width="100"
+               height="50"
+               src="https://45c7ee707fc177ad2a1fa8c3453ce346.r2.cloudflarestorage.com/audio-mixes/deep-house-mix.mp3"
+               layout="responsive">
+    </amp-audio>
+
+    <p style="font-size: 0.85rem; color: var(--muted2); margin-top: 20px;">
+      Select a track below to stream or play directly above. All audio streams are served from our Cloudflare R2 edge network for optimal speed and reliability.
+    </p>
+  </div>
+
+  <!-- Tracks List -->
+  <div class="tracks-list">
+    <h2 class="tracks-title">Available Tracks</h2>
+    
+    <div class="track-item">
+      <div class="track-number">1</div>
+      <div class="track-info">
+        <div class="track-name">Deep House Mix</div>
+        <div class="track-artist">Derrick Files</div>
+      </div>
+      <div class="track-duration">60:00</div>
+    </div>
+
+    <div class="track-item">
+      <div class="track-number">2</div>
+      <div class="track-info">
+        <div class="track-name">Tech House Vibes</div>
+        <div class="track-artist">Derrick Files</div>
+      </div>
+      <div class="track-duration">48:00</div>
+    </div>
+
+    <div class="track-item">
+      <div class="track-number">3</div>
+      <div class="track-info">
+        <div class="track-name">Summer Session</div>
+        <div class="track-artist">Derrick Files</div>
+      </div>
+      <div class="track-duration">70:00</div>
+    </div>
+
+    <div class="track-item">
+      <div class="track-number">4</div>
+      <div class="track-info">
+        <div class="track-name">Club Bangers Mix</div>
+        <div class="track-artist">Derrick Files</div>
+      </div>
+      <div class="track-duration">55:00</div>
+    </div>
+
+    <div class="track-item">
+      <div class="track-number">5</div>
+      <div class="track-info">
+        <div class="track-name">Production Session</div>
+        <div class="track-artist">Derrick Files</div>
+      </div>
+      <div class="track-duration">90:00</div>
+    </div>
+  </div>
+
+  <!-- Info Section -->
+  <div style="margin-top: 40px; padding: 20px; background: var(--card); border: 1px solid #1E1E1E; border-radius: 8px;">
+    <h3 style="font-weight: 700; font-size: 1.1rem; color: var(--gold); margin-bottom: 12px;">About AMP Audio Streaming</h3>
+    <p style="font-size: 0.85rem; color: var(--muted2); line-height: 1.6; margin-bottom: 10px;">
+      This page is optimized using Google AMP (Accelerated Mobile Pages) technology for ultra-fast loading and seamless streaming. Your audio is served directly from Cloudflare R2, ensuring:
+    </p>
+    <ul style="font-size: 0.85rem; color: var(--muted2); line-height: 1.6; padding-left: 20px;">
+      <li>⚡ Lightning-fast loading speeds</li>
+      <li>📱 Optimized for all devices</li>
+      <li>🌍 Global CDN distribution</li>
+      <li>🔐 Secure and reliable streaming</li>
+      <li>💰 Better ad revenue with AMP ads</li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>
